@@ -19,9 +19,6 @@ function App() {
       <div>
         <p>bajskorv</p>
         <p>bajskorv</p>
-        <p>bajskorv</p>
-        <p>bajskorv</p>
-        <p>bajskorv</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
