@@ -1,28 +1,55 @@
-name: CI Pipeline #Namnet workflowet (syns i github action)
+name: CI
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "api/**"
 
-jobs: # Ett jobb = sekvens av steg (körs virtuellt)
-  build-and-test: # Namn på jobbet
-    runs-on: ubuntu-latest # Virtuell maskin som körs i molnet
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
 
-    steps: # Steg i pipline
-      - name: Checkout code
-        uses: actions/checkout@v2 # Hämtar koden från repo
-
-      - name: Setup node.js
-        uses: actions/setup-node@v4 # Installerar node.js
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20" # Version av node.js
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependecies
-        run: npm install # Installerar alla beroenden i package.json
+      - name: Install
+        run: npm ci
 
-      - name: Run tests # G
-        run: npm test # Kör testerna i projektet (om det finns några)
+      - name: Test
+        run: npm test -- --ci --watchAll=false --passWithNoTests
 
-      - name: Build project
-        run: npm run build # Byggsten: bygger React-appen
+      - name: Build
+        run: npm run build --if-present
+
+  api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: api/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test -- --ci --watchAll=false --passWithNoTests
+
+      - name: Build
+        run: npm run build --if-present
