@@ -1,0 +1,28 @@
+name: CI Pipeline #Namnet workflowet (syns i github action)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs: # Ett jobb = sekvens av steg (körs virtuellt)
+  build-and-test: # Namn på jobbet
+    runs-on: ubuntu-latest # Virtuell maskin som körs i molnet
+
+    steps: # Steg i pipline
+      - name: Checkout code
+        uses: actions/checkout@v2 # Hämtar koden från repo
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4 # Installerar node.js
+        with:
+          node-version: "20" # Version av node.js
+
+      - name: Install dependecies
+        run: npm install # Installerar alla beroenden i package.json
+
+      - name: Run tests # G
+        run: npm test # Kör testerna i projektet (om det finns några)
+
+      - name: Build project
+        run: npm run build # Byggsten: bygger React-appen
