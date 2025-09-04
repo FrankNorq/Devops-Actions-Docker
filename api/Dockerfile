@@ -1,18 +1,13 @@
-# API (Node) – enkel körbar image
-FROM node:20-alpine
+FROM node:18-alpine
 
-# 1) Arbetskatalog
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# 2) Installera beroenden
-COPY api/package*.json ./
-# Ta bort --only=production om du behöver dev-deps i containern
-RUN npm ci --only=production
+COPY package*.json ./
 
-# 3) Kopiera resten av koden
-COPY api/. .
+RUN npm install
 
-# 4) Exponera API-port och starta
+COPY . .
+
 EXPOSE 3000
-# Anpassa om du använder npm-scripts: ["npm","start"]
+
 CMD ["node", "server.js"]
