@@ -1,4 +1,9 @@
 {
+  "name": "api",
+  "private": true,
+  "scripts": {
+    "test": "jest --ci --watchAll=false"
+  },
   "dependencies": {
     "express": "^5.1.0"
   },
