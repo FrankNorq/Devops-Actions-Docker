@@ -1,13 +1,18 @@
 services:
+
   api:
     build: ./api
+    image: ancientelfz/api:2.0
     ports:
       - "3000:3000"
     volumes:
       - ./api:/app
       - /app/node_modules
+    environment:
+       DATABASE_URL: ${DATABASE_URL}
   frontend:
     build: ./frontend
+    image: ancientelfz/frontend:2.0
     ports:
       - "5173:5173"
     volumes:

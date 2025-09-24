@@ -1,5 +1,5 @@
-descripe("Pipeline Tes", () => {
+describe("SkkkrtBoy Test", () => {
   it("should confirm that everyything is working", () => {
-    expect(1 + 1).toBe(2);
+    expect(13 + 2 - 13).toBe(2);
   });
 });
