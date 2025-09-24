@@ -1,5 +1,5 @@
 describe("Pipeline Test", () => {
   it("should confirm that everyything is working", () => {
-    expect(2 + 2).toBe(4);
+    expect(a + b).toBe(ab);
   });
 });
