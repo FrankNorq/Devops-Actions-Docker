@@ -18,6 +18,7 @@ function App() {
       </div>
       <div>
         <p>Lint check</p>
+        <p>Lint check</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
