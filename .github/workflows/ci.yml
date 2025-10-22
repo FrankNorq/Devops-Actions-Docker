@@ -7,6 +7,8 @@ on:
       - "frontend/**"
       - "api/**"
       - "db/**"
+  pull_request:
+    branches: [main]
 
 jobs:
   frontend:
@@ -25,6 +27,12 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Prettier (format check)
+        run: npm run format
 
       # - name: Test
       #   run: npm test -- --ci --watchAll=false --passWithNoTests
