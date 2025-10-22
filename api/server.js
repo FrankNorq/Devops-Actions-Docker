@@ -21,8 +21,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api", (req, res) => {
+app.get("/api/ok", (req, res) => {
   res.json({ message: "Hello from the API!" });
+});
+app.get("/api/error", (_req, res) => {
+  const err = new Error("Uppgift1: Avsiktligt fel för Log Stream");
+  console.error(`[ERROR] ${err.message}`);
+  res.status(500).json({ status: "error", message: err.message });
 });
 
 app.post("/api/data", async (req, res) => {
