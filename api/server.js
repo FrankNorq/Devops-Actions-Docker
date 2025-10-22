@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 app.get("/api/ok", (req, res) => {
   console.log("[OK] /api/ok called");
-  res.json({ status: "okk" });
+  res.json({ status: "ok" });
 });
 app.get("/api/error", (_req, res) => {
   const err = new Error("Uppgift1: Avsiktligt fel för Log Stream");
