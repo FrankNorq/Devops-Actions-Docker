@@ -18,6 +18,8 @@ function App() {
       </div>
       <div>
         <p>COOOOOLBOY</p>
+        <p>COOOOOLBOY</p>
+        <p>COOOOOLBOY</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
