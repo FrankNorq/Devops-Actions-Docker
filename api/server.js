@@ -12,7 +12,10 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-
+app.get("/api/crash", (req, res) => {
+  
+  throw new Error("Uppgift2: Simulerat serverfel för metrics");
+});
 app.get("/api/ok", (req, res) => {
   console.log("[OK] /api/ok called");
   res.json({ status: "ok" });
