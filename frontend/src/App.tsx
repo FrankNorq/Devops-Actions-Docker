@@ -17,8 +17,7 @@ function App() {
         </a>
       </div>
       <div>
-        <p>WORK devdev</p>
-        <p>devdevdevd FRANKS DEVDEVDEV min dev</p>
+        <p>Detta är min develop aka utvecklingsserver</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
