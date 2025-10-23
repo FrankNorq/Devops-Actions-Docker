@@ -3,6 +3,6 @@ describe("Pipeline Test", () => {
     const a = 10;
     const b = 5;
     let x = a + b;
-    expect(a + b).toBe(x);
+    expect(a + b).toBe(y);
   });
 });
