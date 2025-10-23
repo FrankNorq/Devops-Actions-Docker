@@ -17,7 +17,7 @@ function App() {
         </a>
       </div>
       <div>
-        <p>WORK dev</p>
+        <p>WORK devdev</p>
         <p>devdevdevdev FRANKS DEVDEVDEV min dev</p>
       </div>
       <h1>Vite + React</h1>
