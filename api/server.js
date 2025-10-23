@@ -3,7 +3,7 @@ const express = require("express");
 const { Pool } = require("pg");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 app.use(express.json());
 
@@ -12,17 +12,18 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
+app.get("/api/crash", (req, res) => {
+  
+  throw new Error("Uppgift2: Simulerat serverfel för metrics");
 });
-
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the API!" });
+app.get("/api/ok", (req, res) => {
+  console.log("[OK] /api/ok called");
+  res.json({ status: "ok" });
+});
+app.get("/api/error", (_req, res) => {
+  const err = new Error("Uppgift1: Avsiktligt fel för Log Stream");
+  console.error(`[ERROR] ${err.message}`);
+  res.status(500).json({ status: "error", message: err.message });
 });
 
 app.post("/api/data", async (req, res) => {

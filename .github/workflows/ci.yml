@@ -2,11 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [develop,main]
     paths:
       - "frontend/**"
       - "api/**"
       - "db/**"
+  pull_request:
+    branches: [develop,main]
 
 jobs:
   frontend:
@@ -16,19 +18,19 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
-
       - name: Install
         run: npm ci
-
+      - name: Lint
+        run: npm run lint
+      - name: Prettier (format check)
+        run: npm run format
       # - name: Test
       #   run: npm test -- --ci --watchAll=false --passWithNoTests
-
       - name: Build
         run: npm run build --if-present
 
@@ -39,19 +41,15 @@ jobs:
         working-directory: api
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
           cache-dependency-path: api/package-lock.json
-
       - name: Install
         run: npm ci
-
       - name: Test
         run: npm test
-
       - name: Build
         run: npm run build --if-present
 
@@ -67,3 +65,38 @@ jobs:
           pwd
           ls -la
           test -f init.sql && echo "init.sql found ✅" || (echo "init.sql missing ❌" && exit 1)
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+          queries: security-and-quality
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript"
+
+          
+  mock-deploy:
+    runs-on: ubuntu-latest
+    needs: [frontend, api, db]
+    steps:
+      - name: Mock Deploy (staging)
+        run: |
+          echo "🚀 Mock-deploy startar…"
+          echo "Skulle deploya artefakter/images som byggdes i föregående jobb."
+          echo "Målmiljö: staging (moln)."
+          echo "✅ Mock-deploy klar!"

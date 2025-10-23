@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY  package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . . 
 
@@ -18,10 +18,10 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm ci --only=production
 
 COPY  --from=builder /app ./
 
-EXPOSE 3000
+EXPOSE 80
 CMD [ "node","server.js" ]
 
