@@ -2,11 +2,11 @@ name: Tests
 
 on:
   push:
-    branches: [main]
+    branches: [dev,main]
     paths:
       - "api/**"
   pull_request:
-    branches: [main]
+    branches: [dev,main]
     paths:
       - "api/**"
   workflow_dispatch:

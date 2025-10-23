@@ -2,13 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [dev,main]
     paths:
       - "frontend/**"
       - "api/**"
       - "db/**"
   pull_request:
-    branches: [main]
+    branches: [dev,main]
 
 jobs:
   frontend:
