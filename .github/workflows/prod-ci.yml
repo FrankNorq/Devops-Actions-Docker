@@ -10,44 +10,27 @@ env:
   IMAGE_NAME: api
 
 jobs:
-  build_push_deploy:
+  build_push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # (ingen test i prod)
 
       - name: Compute image tag
         id: meta
         run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
-      - name: Login ACR
+      - name: Docker login to ACR
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build image
+      - name: Build
         run: |
           docker build -f ./api/Dockerfile ./api \
             -t $REGISTRY/$IMAGE_NAME:${{ steps.meta.outputs.TAG }} \
             --label org.opencontainers.image.revision=${{ steps.meta.outputs.TAG }} \
             --label org.opencontainers.image.source=${{ github.repository }}
-      - name: Push image
+      - name: Push
         run: docker push $REGISTRY/$IMAGE_NAME:${{ steps.meta.outputs.TAG }}
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy to ACA PROD
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az containerapp update \
-              --name "${{ secrets.ACA_APP_PROD }}" \
-              --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" \
-              --image "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.TAG }}" \
-              --set-env-vars GIT_SHA=${{ steps.meta.outputs.TAG }}
