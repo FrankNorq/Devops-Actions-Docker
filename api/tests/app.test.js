@@ -1,14 +1,10 @@
-// api/__tests__/app.test.js
-
-// Inline-mock av 'pg' (ingen __mocks__-mapp behövs)
 jest.mock("pg", () => {
   const queryMock = jest.fn();
   return {
-    // Pool som använder samma queryMock
     Pool: jest.fn(() => ({
       query: (sql, params) => queryMock(sql, params),
     })),
-    // Exponera mocken så testen kan styra/reseta
+
     __queryMock: queryMock,
   };
 });
