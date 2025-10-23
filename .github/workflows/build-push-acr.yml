@@ -1,7 +1,7 @@
 name: Build & Push to ACR
 on:
   push:
-    branches: [develop,main]
+    branches: [main]
     paths:
       - "api/**"
       - ".github/workflows/**"
