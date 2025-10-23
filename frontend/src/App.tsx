@@ -17,7 +17,7 @@ function App() {
         </a>
       </div>
       <div>
-        <p>devdevdevdev FRANKS DEVDEVDEV</p>
+        <p>dMAINMAINMAINMAIN FRANKS MAIN</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
