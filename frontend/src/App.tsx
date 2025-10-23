@@ -17,8 +17,7 @@ function App() {
         </a>
       </div>
       <div>
-        <p>Lint check</p>
-        <p>Lint check</p>
+        <p>COOOOOLBOY</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
