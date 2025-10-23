@@ -17,9 +17,7 @@ function App() {
         </a>
       </div>
       <div>
-        <p>COOOOOLBOY</p>
-        <p>COOOOOLBOY</p>
-        <p>COOOOOLBOY</p>
+        <p>FrankITanky</p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
