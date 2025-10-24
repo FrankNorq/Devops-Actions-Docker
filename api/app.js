@@ -19,7 +19,7 @@ app.get("/api/crash", (_req, _res) => {
 
 app.get("/api/ok", (_req, res) => {
   console.log("[OK] /api/ok called");
-  res.json({ status: "ok" });
+  res.json({ status: "kkk" });
 });
 
 app.get("/api/error", (_req, res) => {
