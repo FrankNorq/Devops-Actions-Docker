@@ -17,7 +17,7 @@ function App() {
         </a>
       </div>
       <div>
-        <p>Min Main aka production1 </p>
+        <p>Final push main </p>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
