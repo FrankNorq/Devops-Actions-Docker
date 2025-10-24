@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "jest --ci --watchAll=false"
+    "test": "jest --ci --watchAll=false",
+    "swagger:json": "node scripts/export-swagger.mjs",
+    "swagger:validate": "redocly lint docs/openapi.json",
+    "ci:swagger": "npm run swagger:json && npm run swagger:validate"
   },
   "dependencies": {
     "dotenv": "^17.2.2",
@@ -16,6 +19,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@redocly/cli": "^1.34.5",
     "jest": "^30.1.3",
     "supertest": "^7.1.4"
   }
