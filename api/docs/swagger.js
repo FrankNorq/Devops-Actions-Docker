@@ -11,8 +11,16 @@ const swaggerOptions = {
       title: "API Documentation",
       version: "1.0.0",
       description: "API for Air Quality Monitoring",
+      license: { name: "MIT" },
+      contact: {
+        name: "API Support",
+        email: "support@example.com",
+      },
     },
-    servers: [{ url: serverUrl }],
+    servers: [
+      { url: process.env.SWAGGER_SERVER_URL || "https://api.example.com" },
+    ],
+    security: [],
   },
   apis: ["./docs/*.js"],
 };

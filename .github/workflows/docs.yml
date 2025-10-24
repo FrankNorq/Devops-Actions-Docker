@@ -1,16 +1,20 @@
 name: Docs (Swagger)
 
 on:
+  workflow_dispatch: {}
   pull_request:
+    branches: [main, dev]
     paths:
       - "api/docs/**"
       - "api/package.json"
       - "api/package-lock.json"
       - ".github/workflows/docs.yml"
   push:
-    branches: [main, dev, "**"]
+    branches: [main, dev]
     paths:
       - "api/docs/**"
+      - "api/package.json"
+      - "api/package-lock.json"
       - ".github/workflows/docs.yml"
 
 jobs:
@@ -34,11 +38,8 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Lint OpenAPI (Redocly)
-        run: npm run swagger:validate
-
-      - name: Bundle OpenAPI (YAML → JSON)
-        run: npm run swagger:bundle
+      - name: Generate & Lint OpenAPI (JSDoc → JSON)
+        run: npm run ci:swagger
 
       - name: Upload openapi.json artifact
         uses: actions/upload-artifact@v4
