@@ -1,17 +1,20 @@
-jest.mock("pg", () => {
+import request from "supertest";
+import { jest } from "@jest/globals";
+
+// Mocka 'pg' innan appen importeras
+jest.unstable_mockModule("pg", () => {
   const queryMock = jest.fn();
   return {
     Pool: jest.fn(() => ({
       query: (sql, params) => queryMock(sql, params),
     })),
-
     __queryMock: queryMock,
   };
 });
 
-const request = require("supertest");
-const { __queryMock } = require("pg");
-const app = require("../server");
+// Hämta mockens handle och appen efter mockningen
+const { __queryMock } = await import("pg");
+const { default: app } = await import("../app.js");
 
 describe("API", () => {
   beforeEach(() => {

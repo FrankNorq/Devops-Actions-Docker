@@ -1,63 +1,8 @@
-import "dotenv/config";
+import app from "./app.js";
 
-import express from "express";
-import { Pool } from "pg";
-import setupSwagger from "./docs/swagger.js";
-
-const app = express();
 const port = process.env.PORT || 80;
-
-app.use(express.json());
-setupSwagger(app);
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
-
-app.get("/api/crash", (_req, _res) => {
-  throw new Error("Uppgift2: Simulerat serverfel för metrics");
-});
-
-app.get("/api/ok", (_req, res) => {
-  console.log("[OK] /api/ok called");
-  res.json({ status: "ok" });
-});
-
-app.get("/api/error", (_req, res) => {
-  const err = new Error("Uppgift1: Avsiktligt fel för Log Stream");
-  console.error(`[ERROR] ${err.message}`);
-  res.status(500).json({ status: "error", message: err.message });
-});
-
-app.post("/api/data", async (req, res) => {
-  try {
-    const { message } = req.body;
-    await pool.query(
-      "CREATE TABLE IF NOT EXISTS messages (id SERIAL PRIMARY KEY, text TEXT)"
-    );
-    const result = await pool.query(
-      "INSERT INTO messages (text) VALUES ($1) RETURNING id",
-      [message]
-    );
-    res.json({ id: result.rows[0].id, status: "success" });
-  } catch (err) {
-    console.error("Failed to save data:", err);
-    res.status(500).json({ status: "error", message: "Failed to save data" });
-  }
-});
-
-app.use((err, _req, res, _next) => {
-  console.error(err);
-  res
-    .status(500)
-    .json({ status: "error", message: err.message || "Serverfel" });
-});
-
 app.listen(port, "0.0.0.0", () => {
   console.log(`API is running on http://localhost:${port}`);
   console.log(`Swagger UI:      http://localhost:${port}/api-docs`);
   console.log(`OpenAPI JSON:    http://localhost:${port}/api-docs.json`);
 });
-
-export default app;
